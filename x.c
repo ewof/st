@@ -830,11 +830,21 @@ xloadcolor(int i, const char *name, Color *ncolor)
 void
 xloadalpha(void)
 {
-	float const usedAlpha = focused ? alpha : alphaUnfocus;
-	if (opt_alpha) alpha = strtof(opt_alpha, NULL);
-	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * usedAlpha);
-	dc.col[defaultbg].pixel &= 0x00FFFFFF;
-	dc.col[defaultbg].pixel |= (unsigned char)(0xff * usedAlpha) << 24;
+    float const usedAlpha = focused ? alpha : alphaUnfocus;
+    if (opt_alpha) alpha = strtof(opt_alpha, NULL);
+
+    // interpolate RGB towards black (#000000) as usedAlpha -> 0
+    dc.col[defaultbg].color.red = (unsigned short)(dc.col[defaultbg].color.red * usedAlpha);
+    dc.col[defaultbg].color.green = (unsigned short)(dc.col[defaultbg].color.green * usedAlpha);
+    dc.col[defaultbg].color.blue = (unsigned short)(dc.col[defaultbg].color.blue * usedAlpha);
+
+    dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * usedAlpha);
+
+    unsigned char a = dc.col[defaultbg].color.alpha >> 8;
+    unsigned char r = dc.col[defaultbg].color.red >> 8;
+    unsigned char g = dc.col[defaultbg].color.green >> 8;
+    unsigned char b = dc.col[defaultbg].color.blue >> 8;
+    dc.col[defaultbg].pixel = (a << 24) | (r << 16) | (g << 8) | b;
 }
 
 void
