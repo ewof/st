@@ -247,3 +247,7 @@ st-bs-256color| simpleterm with backspace as backspace and 256colors,
 	use=st-256color,
 	kbs=\010,
 	kdch1=\177,
+
+# st with Kitty graphics protocol support.
+st-kitty|st with Kitty graphics and 256 colors,
+	use=st-256color,

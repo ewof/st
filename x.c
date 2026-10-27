@@ -1903,7 +1903,9 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
 
 	/* Redraw the line where cursor was previously.
 	 * It will restore the ligatures broken by the cursor. */
+	xstartimagedraw(NULL, 0);
 	xdrawline(line, 0, oy, len);
+	xfinishimagedraw();
 
 	if (IS_SET(MODE_HIDE))
 		return;
