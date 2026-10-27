@@ -102,7 +102,7 @@ hbtransform(XftGlyphFontSpec *specs, const Glyph *glyphs, size_t len, int x, int
 	for (int i = 0, specidx = 0; i < len; i++) {
 		if (glyphs[i].mode & ATTR_WDUMMY)
 			continue;
-		if (glyphs[i].mode & ATTR_BOXDRAW) {
+		if (glyphs[i].mode & (ATTR_BOXDRAW | ATTR_IMAGE)) {
 			specidx++;
 			continue;
 		}
@@ -132,7 +132,7 @@ hbtransformsegment(XftFont *xfont, const Glyph *string, hb_codepoint_t *codepoin
 	for (int i = start; i < (start+length); i++) {
 		rune = string[i].u;
 		mode = string[i].mode;
-		if (mode & ATTR_WDUMMY)
+		if (mode & (ATTR_WDUMMY | ATTR_IMAGE))
 			rune = 0x0020;
 		hb_buffer_add_codepoints(buffer, &rune, 1, 0, 1);
 	}

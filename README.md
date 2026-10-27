@@ -87,3 +87,22 @@ Note that when you run `wal`, it will negate the transparency of existing window
 
 - Luke Smith <luke@lukesmith.xyz>
 - [https://lukesmith.xyz](https://lukesmith.xyz)
+
+## Kitty graphics
+
+This build includes the st-graphics patch for st 0.9.3 and requires imlib2 and
+zlib in addition to the existing build dependencies. It preserves this fork's
+scrollback, box drawing, ligatures, alpha, and Xresources configuration.
+
+Codex currently detects pet image support from terminal names rather than a
+Kitty graphics query. In a new instance of this terminal, launch it with:
+
+```sh
+TERM=xterm-kitty codex
+```
+
+Use `/pet` to open the pet picker. Keep this override local to Codex; the normal
+terminal terminfo remains `st-256color`. Run outside tmux for terminal pets.
+
+Graphics debug shortcuts use the existing `TERMMOD` (Alt+Shift): F1 toggles
+debugging, F6 dumps image state, F7 unloads images, and F8 toggles image display.
