@@ -738,6 +738,9 @@ execsh(char *cmd, char **args)
 	setenv("SHELL", sh, 1);
 	setenv("HOME", pw->pw_dir, 1);
 	setenv("TERM", termname, 1);
+	/* Advertise Kitty graphics separately from the portable terminfo name. */
+	setenv("TERM_PROGRAM", "kitty", 1);
+	setenv("COLORTERM", "truecolor", 1);
 
 	signal(SIGCHLD, SIG_DFL);
 	signal(SIGHUP, SIG_DFL);
